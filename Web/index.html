@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Donation</title>
+</head>
+<body>
+	<form onsubmit="return setDonation()">
+		<p>Nickname: <input type="text" id="nick"></p>
+		<p>Sum: <input type="number" id="sum"></p>
+		<p>
+			<select id="currency">
+				<option value="RUB">RUB</option>
+				<option value="AMD">AMD</option>
+				<option value="USD">USD</option>
+				<option value="EUR">EUR</option>
+			</select>
+		</p>
+		<p>
+			Message: <br><br> 
+			<textarea id="message" maxlength="100"></textarea>
+		</p>
+		<p><input type="submit"></p>
+	</form>
+
+	<script type="text/javascript">
+		let socket = new WebSocket("ws://192.168.1.72:9999");
+
+		function setDonation() {
+			let donation = {
+				nick: document.querySelector('#nick').value,
+				sum: document.querySelector('#sum').value,
+				message: document.querySelector('#message').value,
+			}
+
+			socket.send(JSON.stringify(donation));
+
+			return false;
+		}
+	</script>
+
+
+</body>
+</html>
